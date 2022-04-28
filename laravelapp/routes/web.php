@@ -21,6 +21,9 @@ Route::get('/', function () {
 Route::get('/hello/{name}', function (string $name) {
     return "Hello, ".$name;
 });
+Route::get('/all-news/}', function () {
+    return view("news");;
+});
 
 Route::get('/news/{id}', function () {
     return "News".$id;
