@@ -14,7 +14,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return 'Списко новостей';
+        return view("News.admin.index");
     }
 
     /**
