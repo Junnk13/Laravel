@@ -40,6 +40,7 @@
                         <li><a href="#" class="text-white">Follow on Twitter</a></li>
                         <li><a href="#" class="text-white">Like on Facebook</a></li>
                         <li><a href="#" class="text-white">Email me</a></li>
+                        <li><a href="../admin/" class="text-white">Админка</a></li>
                     </ul>
                 </div>
             </div>
@@ -47,7 +48,7 @@
     </div>
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a href="{{ route('news.info') }}" class="navbar-brand d-flex align-items-center">
+            <a href="{{ route('infonews.index') }}" class="navbar-brand d-flex align-items-center">
                 <strong>Главная</strong>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"

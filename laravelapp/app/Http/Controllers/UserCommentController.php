@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class UserCommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view("News.admin.news-index");
+        //
     }
 
     /**
@@ -24,7 +23,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('News.admin.news-create');
+        //
     }
 
     /**
@@ -35,9 +34,9 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['title'=>['required','string'] ]);
-        $request->validate(['newsText'=>['required','string'] ]);
-       return response()->json($request->except('_token'),201);
+        $request->validate(['user_name'=>['required','string'] ]);
+        $request->validate(['message'=>['required','string'] ]);
+        return response()->json($request->except('_token'),201);
     }
 
     /**

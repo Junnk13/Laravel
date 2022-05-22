@@ -7,7 +7,7 @@
                 <p class="lead text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ducimus rerum velit. Eum, ipsam, unde.</p>
                 <p>
                     @foreach ($categoryList as $category)
-                        <a href="{{route("news.catnews", ['idCategory' => $category['id']])}}" class="btn btn-secondary my-2">{{ $category["title"] }}</a>
+                        <a href="{{route("infonews.catnews", ['idCategory' => $category['id']])}}" class="btn btn-secondary my-2">{{ $category["title"] }}</a>
 
                     @endforeach
                           </p>
