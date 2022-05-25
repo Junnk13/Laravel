@@ -12,7 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function getNews(int $id): array
+  /*  public function getNews(int $id): array
     {
         $news = [];
         $faker = Factory::create();
@@ -59,6 +59,6 @@ class Controller extends BaseController
             ];
         }
         return $category;
-    }
+    }*/
 }
 

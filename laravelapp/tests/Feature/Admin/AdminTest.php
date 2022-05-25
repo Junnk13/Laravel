@@ -39,7 +39,8 @@ class AdminTest extends TestCase
         $data = [
             'title' => 'test title',
             'author' => 'test author',
-            'newsText' => 'test desc'
+            'newsText' => 'test desc',
+            'status'=>'ACTIVE'
         ];
         $response = $this->post(route('admin.news.store'), $data);
 

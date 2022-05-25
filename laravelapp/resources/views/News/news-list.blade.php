@@ -15,18 +15,23 @@
                 @forelse($newsList as $news)
                     <div class="col">
                         <div class="card shadow-sm">
-                            <img src="{{ $news['img'] }}" style="width:200px;">
+                            @if($news->image==null)
+                                <img src="https://is5-ssl.mzstatic.com/image/thumb/Music128/v4/e3/fa/1b/e3fa1b91-bd3f-67c1-6e62-135e6519d5f9/source/500x500bb.jpg" style="width:200px;">
+                            @else
+                                <img src="{{$news->image}}" style="width:200px;" alt="image">
+                            @endif
+
                             <div class="card-body">
                                 <strong>
-                                    <a href="{{ route('infonews.show', ['id' => $news['id']]) }}">{{ $news['title'] }}</a>
+                                    <a href="{{ route('infonews.show', ["id"=>$news->id]) }}">{{ $news->title }}</a>
                                 </strong>
-                                <p class="card-text"> {!! $news['desc'] !!} </p>
+                                <p class="card-text"> {!! $news->short_description !!} </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="{{ route('infonews.show', ['id' => $news['id']]) }}"
+                                        <a href="{{ route('infonews.show', ['id'=> $news->id]) }}"
                                            class="btn btn-sm btn-outline-secondary">Подробнее</a>
                                     </div>
-                                    <small class="text-muted"><strong>Автор:</strong> {{ $news['author'] }}</small>
+                                    <small class="text-muted"><strong>Автор:</strong> {{ $news->author }}</small>
                                 </div>
                             </div>
                         </div>

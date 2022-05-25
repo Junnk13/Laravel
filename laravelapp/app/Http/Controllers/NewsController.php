@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\Request;
 use function GuzzleHttp\Promise\all;
 
@@ -14,26 +16,29 @@ class NewsController extends Controller
 
     public function category()
     {
-        $category = $this->getCategory();
+        $model=app(Category::class);
+        $categories =$model->getCategories();
         return view('News.category', [
-            'categoryList' => $category,
+            'categoryList' => $categories,
         ]);
     }
 
     public function show(int $id)
     {
-        $news = $this->getNews($id);
+        $model = app(News::class);
+        $news = $model->getNewsById($id );
+
         return view('News.show-news', [
             'news' => $news
         ]);
     }
 
-    public function news($idCategory)
+    public function newsList($idCategory)
     {
-        $news = $this->getAllNews($idCategory);
-        // dd($news);
+        $model = app(News::class);
+        $newsArr = $model->getNews($idCategory);
         return view('News.news-list', [
-            'newsList' => $news
+            'newsList' => $newsArr
         ]);
     }
 

@@ -37,7 +37,7 @@ Route::group(['prefix' => 'infonews', 'as' => 'infonews.'], function () {
     Route::resource("/comment", UserCommentController::class);
     Route::post('/',[NewsController::class,'getUrlData'])->name('getUrlData');
     Route::get('/category', [NewsController::class, 'category'])->name('category');
-    Route::get('/category/{idCategory}', [NewsController::class, 'news'])->name('catnews');
+    Route::get('/category/{idCategory}', [NewsController::class, 'newsList'])->name('newsList');
     Route::get('/category/news/{id}', [NewsController::class, 'show'])
         ->where('id', "\d+")
         ->name("show");

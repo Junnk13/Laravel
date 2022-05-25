@@ -24,6 +24,13 @@
             <label for="formFileMultiple" class="form-label">Загрузите изображение</label>
             <input class="form-control" name="image" type="file" id="formFileMultiple">
         </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Статус</label>
+            <select class="form-control" name="status" id="status">
+                <option @if(old('status') === 'ACTIVE') selected @endif>ACTIVE</option>
+                <option @if(old('status') === 'HIDE') selected @endif>BLOCKED</option>
+            </select>
+        </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Опубликовать</button>
         </div>
