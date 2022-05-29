@@ -3,53 +3,41 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\News;
-use App\Queries\QueryBuilderNews;
+use App\Models\Sourses;
 use Illuminate\Http\Request;
+use App\Queries\QueryBuilderSourses;
 
-class NewsController extends Controller
+class SoursesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index(QueryBuilderNews $news)
+    public function index(QueryBuilderSourses $sourses)
     {
-        return view("News.admin.news-index",['news' => $news->getNews()]);
+        return view("News.admin.sourses-index",['sourses' => $sourses->getSourses()]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $categories = Category::all();
-       return view('News.admin.news-create',[
-            'categories' => $categories
-        ]);
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-
-        $validated = $request->except(['_token', 'image']);
-
-        $news = News::create($validated);
-        if($news) {
-            return redirect()->route('admin.news.index')
-                ->with('success', 'Запись успешно добавлена');
-        }
-        return back()->with('error', 'Ошибка добавления');
+        $validated = $request->except(['_token']);
     }
 
     /**
@@ -66,29 +54,27 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param News $news
+     * @param Sourses $sourse
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(News $news)
+    public function edit(Sourses $sourse)
     {
-        $categories = Category::all();
-        return view('News.admin.news-edit',['news' => $news,'categories' => $categories]);
+        return view('News.admin.sourses-edit',['sourse' => $sourse]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param Sourses $sourse
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, News $news)
+    public function update(Request $request, Sourses $sourse)
     {
-        $validated = $request->only(['id', 'title','author','short_description',"full_description",'status']);
-
-        $news = $news->fill($validated);
-        if($news->save()) {
-            return redirect()->route('admin.news.index')
+        $validated = $request->except(['_token']);
+        $sourse = $sourse->fill($validated);
+        if($sourse->save()) {
+            return redirect()->route('admin.sourses.index')
                 ->with('success', 'Запись успешно обновлена');
         }
 

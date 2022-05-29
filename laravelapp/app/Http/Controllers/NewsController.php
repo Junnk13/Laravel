@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\News;
+use App\Queries\QueryBuilderCategories;
+use App\Queries\QueryBuilderNews;
 use Illuminate\Http\Request;
 use function GuzzleHttp\Promise\all;
 
@@ -14,31 +14,26 @@ class NewsController extends Controller
         return view('News.index');
     }
 
-    public function category()
+    public function category(QueryBuilderCategories $categories)
     {
-        $model=app(Category::class);
-        $categories =$model->getCategories();
+
         return view('News.category', [
-            'categoryList' => $categories,
+            'categoryList' => $categories->getCategories(),
         ]);
     }
 
-    public function show(int $id)
+    public function show(QueryBuilderNews $news, $id)
     {
-        $model = app(News::class);
-        $news = $model->getNewsById($id );
 
         return view('News.show-news', [
-            'news' => $news
+            'news' => $news->getCurrentNews($id)
         ]);
     }
 
-    public function newsList($idCategory)
+    public function newsList(QueryBuilderNews $newsArr, $idCategory)
     {
-        $model = app(News::class);
-        $newsArr = $model->getNews($idCategory);
         return view('News.news-list', [
-            'newsList' => $newsArr
+            'newsList' => $newsArr->getNewsById($idCategory)
         ]);
     }
 
@@ -47,7 +42,7 @@ class NewsController extends Controller
 
         $request->validate(['user_name_url' => ['required', 'string']]);
         $request->validate(['user_url' => ['required', 'string']]);
-        $data =response()->json($request->except('_token'),201);
+        $data = response()->json($request->except('_token'), 201);
         \Storage::put('file.txt', $data);
         return 'Файл сохранен';
     }

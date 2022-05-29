@@ -6,6 +6,7 @@ use \App\Http\Controllers\UserCommentController;
 use App\Http\Controllers\Admin\IndexController as AdminCtrl;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryCtrl;
 use \App\Http\Controllers\Admin\NewsController as AdminNewsCtrl;
+use \App\Http\Controllers\Admin\SoursesController as AdminSoursesCtrl;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get("/",[AdminCtrl::class,'index'])->name('index');
     Route::resource('/category', AdminCategoryCtrl::class);
     Route::resource("/news", AdminNewsCtrl::class);
+    Route::resource("/sourses", AdminSoursesCtrl::class);
 });
 
 Route::group(['prefix' => 'infonews', 'as' => 'infonews.'], function () {

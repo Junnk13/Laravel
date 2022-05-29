@@ -5,21 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class News extends Model
 {
     use HasFactory;
 
     protected $table = 'news';
+    protected $fillable = [
+        'id', 'title', 'author', 'image', 'short_description', "full_description", 'created_at', 'status', 'category_id'
+    ];
 
-    public function getNews($idCategory)
+    public function category(): BelongsTo
     {
-        return DB::table($this->table)->select(['id', 'title','author','image','short_description', 'created_at'])
-            ->where('category_id','=', $idCategory)->get();
-    }
-    public function getNewsById(int $id)
-    {
-        return DB::table($this->table)->select(['id', 'title','author','image','full_description', 'created_at'])->find($id);
-
+        return $this->belongsTo(Category::class, 'category_id',
+            'id');
     }
 }
