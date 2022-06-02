@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateNewsRequest;
+use App\Http\Requests\UpdateNewsRequest;
 use App\Models\Category;
 use App\Models\News;
 use App\Queries\QueryBuilderNews;
@@ -36,20 +38,20 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateNewsRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateNewsRequest $request)
     {
 
-        $validated = $request->except(['_token', 'image']);
+        $validated = $request->validated();
 
         $news = News::create($validated);
         if($news) {
             return redirect()->route('admin.news.index')
-                ->with('success', 'Запись успешно добавлена');
+                ->with('success', __("message.admin.news.create.success"));
         }
-        return back()->with('error', 'Ошибка добавления');
+        return back()->with('error', __("message.admin.news.create.error"));
     }
 
     /**
@@ -78,31 +80,37 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UpdateNewsRequest $request
+     * @param News $news
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, News $news)
+    public function update(UpdateNewsRequest $request, News $news)
     {
-        $validated = $request->only(['id', 'title','author','short_description',"full_description",'status']);
-
+        $validated = $request->validated();
         $news = $news->fill($validated);
         if($news->save()) {
             return redirect()->route('admin.news.index')
-                ->with('success', 'Запись успешно обновлена');
+                ->with('success', __("message.admin.news.update.success"));
         }
 
-        return back()->with('error', 'Ошибка обновления');
+        return back()->with('error', __("message.admin.news.update.error"));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(News $news)
     {
-        //
+        try {
+            $news->delete();
+            return response()->json('ok');
+
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => true], 400);
+        }
     }
 }

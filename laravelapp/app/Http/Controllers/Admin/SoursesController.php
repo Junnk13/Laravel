@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateSourseRequest;
+use App\Http\Requests\UpdateSourseRequest;
 use App\Models\Sourses;
 use Illuminate\Http\Request;
 use App\Queries\QueryBuilderSourses;
@@ -35,9 +37,10 @@ class SoursesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateSourseRequest $request)
     {
-        $validated = $request->except(['_token']);
+        $validated = $request->validated();
+
     }
 
     /**
@@ -65,30 +68,37 @@ class SoursesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param UpdateSourseRequest $request
      * @param Sourses $sourse
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Sourses $sourse)
+    public function update(UpdateSourseRequest $request, Sourses $sourse)
     {
-        $validated = $request->except(['_token']);
+        $validated = $request->validated();
         $sourse = $sourse->fill($validated);
         if($sourse->save()) {
             return redirect()->route('admin.sourses.index')
-                ->with('success', 'Запись успешно обновлена');
+                ->with('success', __("message.admin.news.update.success"));
         }
 
-        return back()->with('error', 'Ошибка обновления');
+        return back()->with('error', __("message.admin.news.update.error"));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Sourses $sourse
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Sourses $sourse)
     {
-        //
+        try {
+            $sourse->delete();
+            return response()->json('ok');
+
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => true], 400);
+        }
     }
 }

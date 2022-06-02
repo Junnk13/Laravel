@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Queries\QueryBuilderCategories;
 use Illuminate\Http\Request;
@@ -33,19 +35,19 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Category $category
+     * @param CreateCategoryRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        $validated = $request->except(['_token']);
+        $validated = $request->validated();
 
         $category = Category::create($validated);
         if($category) {
             return redirect()->route('admin.category.index')
-                ->with('success', 'Запись успешно добавлена');
+                ->with('success', __("message.admin.news.create.success"));
         }
-        return back()->with('error', 'Ошибка добавления');
+        return back()->with('error', __("message.admin.news.create.error"));
     }
 
     /**
@@ -73,31 +75,39 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param UpdateCategoryRequest $request
      * @param Category $category
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $validated = $request->only(['title']);
+        $validated = $request->validated();
 
         $category = $category->fill($validated);
         if($category->save()) {
             return redirect()->route('admin.category.index')
-                ->with('success', 'Запись успешно обновлена');
+                ->with('success', __("message.admin.news.update.success"));
         }
 
-        return back()->with('error', 'Ошибка обновления');
+        return back()->with('error',  __("message.admin.news.update.error"));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        try {
+            $category->delete();
+            return response()->json('ok');
+
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => true], 400);
+        }
+
     }
 }

@@ -11,7 +11,7 @@
     <div class="table-responsive">
 
         <h3>Форма редактирования категории</h3>
-
+        @include('inc.messages')
         <form method="post" action="{{ route('admin.category.update', ['category' => $category]) }}">
             @csrf
             @method('put')

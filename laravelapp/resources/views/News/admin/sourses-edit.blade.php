@@ -11,7 +11,7 @@
     <div class="table-responsive">
 
         <h3>Форма редактирования источника</h3>
-
+        @include('inc.messages')
         <form method="post" action="{{ route('admin.sourses.update', ['sourse' => $sourse]) }}">
             @csrf
             @method('put')
