@@ -25,6 +25,12 @@
                     Управление новостями
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('admin.profile.*')) active @endif" href="{{route('admin.profile.index')}}">
+                    <span data-feather="users"></span>
+                     Прлфили пользователей
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
