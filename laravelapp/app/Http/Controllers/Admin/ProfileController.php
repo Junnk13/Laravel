@@ -65,9 +65,9 @@ class ProfileController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param User $profile
-     * @return Response
+     * @return Application|Factory|View|Response
      */
-    public function edit(User $profile): Response
+    public function edit(User $profile)
     {
         return view('News.admin.profile-edit',['profile' => $profile]);
     }
@@ -87,6 +87,7 @@ class ProfileController extends Controller
         if ($request->isMethod('put')) {
             $validated = $userRequest->validated();
             if (Hash::check($validated['password'], $user->password)) {
+                $validated['password'] = Hash::make($validated['password']);
                 $user->fill($validated);
                 if ($validated['new_password']) {
                     $newPass = Hash::make($validated['new_password']);

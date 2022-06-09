@@ -6,6 +6,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
+                <a href="{{ route('social.redirect',['driver'=>'vkontakte']) }}">Вход через вк</a>
+                <br>
+                <a href="{{ route('social.redirect',['driver'=>'github']) }}">Вход через github</a>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
