@@ -13,7 +13,7 @@
                     Категории
                 </a>
             </li>  <li class="nav-item">
-                <a class="nav-link @if(request()->routeIs('admin. sourses.*')) active @endif" href="{{ route('admin.sourses.index') }}">
+                <a class="nav-link @if(request()->routeIs('admin. sources.*')) active @endif" href="{{ route('admin.sources.index') }}">
                     <span data-feather="file"></span>
                     Источники новстей
                 </a>
@@ -28,7 +28,7 @@
             <li class="nav-item">
                 <a class="nav-link @if(request()->routeIs('admin.profile.*')) active @endif" href="{{route('admin.profile.index')}}">
                     <span data-feather="users"></span>
-                     Прлфили пользователей
+                     Профили пользователей
                 </a>
             </li>
         </ul>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateSourseRequest extends FormRequest
+class UpdateSourceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,8 @@ class CreateSourseRequest extends FormRequest
     {
         return [
             'user_name' => ['required', 'string', 'min:2'],
-            'user_email' => ['required', 'email:rfc,dns', 'unique:Sourses', 'string'],
-            'url' => ['required', 'string', 'unique:Sourses']
+            'user_email' => ['required', 'email:rfc,dns', 'string'],
+            'url' => ['required', 'string']
         ];
     }
 }

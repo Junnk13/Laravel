@@ -18,7 +18,7 @@ class NewsController extends Controller
     {
 
         return view('News.category', [
-            'categoryList' => $categories->getCategories(),
+            'categoryList' => $categories->getCategoriesForIndex(),
         ]);
     }
 
@@ -37,13 +37,4 @@ class NewsController extends Controller
         ]);
     }
 
-    public function getUrlData(Request $request)
-    {
-
-        $request->validate(['user_name_url' => ['required', 'string']]);
-        $request->validate(['user_url' => ['required', 'string']]);
-        $data = response()->json($request->except('_token'), 201);
-        \Storage::put('file.txt', $data);
-        return 'Файл сохранен';
-    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSoursesTable extends Migration
+class CreateSourcesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSoursesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sourses', function (Blueprint $table) {
+        Schema::create('sources', function (Blueprint $table) {
             $table->id();
             $table->string('user_name', 255)->nullable();
             $table->string('user_email',255)->nullable();
@@ -29,6 +29,6 @@ class CreateSoursesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sourses');
+        Schema::dropIfExists('sources');
     }
 }

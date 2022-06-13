@@ -3,44 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateCategoryRequest;
-use App\Models\Category;
-use App\Models\News;
-use App\Services\Contract\Parser;
+use App\Jobs\NewsParsing;
+use App\Models\Sources;
 use Illuminate\Http\Request;
 
 class ParserController extends Controller
 {
-    public function __invoke(Request $request, Parser $parser)
+    public function __invoke(Request $request): \Illuminate\Http\RedirectResponse
     {
-
-        $data = $parser->setLink('https://news.yandex.ru/movies.rss')->parse();
-
-        $category = [
-            'title' => $data['title']
-        ];
-        $news = [];
-        foreach ($data as $newsItem) {
-            $news = $newsItem;
+        $urls=[];
+        $sources = Sources::all();
+        foreach ($sources as $source){
+            $urls[]=$source->url;
         }
-
-        $newCategory = Category::create($category);
-        if ($newCategory) {
-            $catId = $newCategory->id;
+        if (empty($urls)) {
+            return back()->with('error', 'Нет источников для добавления в очередь');
         }
-        $newsCount = count($news);
-
-        for ($i = 0; $i < $newsCount; $i++) {
-            $createNews['title'] = $news[$i]['title'];
-            $createNews['short_description'] = $news[$i]['description'];
-            $createNews['full_description'] = $news[$i]['description'];
-            $createNews['category_id'] = $catId;
-            $createdNews = News::create($createNews);
+        foreach ($urls as $url) {
+           $this->dispatch(new NewsParsing($url));
         }
-        if ($createdNews)
-            return redirect()->route('admin.news.index')->with('success', __("message.admin.news.create.success"));
-        else
-            return back()->with('error', __("message.admin.news.create.error"));
+      return back()->with('success', 'Новости добавлены в очередь');
 
     }
 }

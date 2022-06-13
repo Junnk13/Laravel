@@ -25,9 +25,9 @@ class UpdateNewsRequest extends FormRequest
     {
         return [
             'category_id' => ['required', 'integer', 'min:1', 'exists:categories,id'],
-            'title' => ['required','unique:News', 'string', 'min:5'],
+            'title' => ['required','string', 'min:5'],
             'author' => ['required', 'string', 'min:2'],
-            'image' => ['nullable', 'string', 'mimes:png,jpg'],
+            'image' => ['nullable', 'mimes:png,jpg'],
             'short_description' => ['required', 'string', 'min:10'],
             'full_description' => ['required', 'string', 'min:30'],
             'status' => ['required', 'string', 'min:4']

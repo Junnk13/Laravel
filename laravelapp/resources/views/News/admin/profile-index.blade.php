@@ -22,10 +22,15 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->is_admin }}</td>
+                    @if( $user->is_admin == 1 )
+                        <td>Да</td>
+                    @else
+                        <td>Нет</td>
+                    @endif
                     <td><a href="{{route('admin.profile.edit', ['profile' => $user]) }}"
                            style="font-size: 12px;">Ред.</a> &nbsp;
-                        <a href="javascript:;" style="color:red; font-size: 12px;" class="delete" rel="{{ $user->id }}">Уд.</a></td>
+                        <a href="javascript:;" style="color:red; font-size: 12px;" class="delete" rel="{{ $user->id }}">Уд.</a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

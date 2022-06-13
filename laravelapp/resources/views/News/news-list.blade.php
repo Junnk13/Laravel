@@ -18,7 +18,7 @@
                             @if($news->image==null)
                                 <img src="https://is5-ssl.mzstatic.com/image/thumb/Music128/v4/e3/fa/1b/e3fa1b91-bd3f-67c1-6e62-135e6519d5f9/source/500x500bb.jpg" style="width:200px;">
                             @else
-                                <img src="{{$news->image}}" style="width:200px;" alt="image">
+                                <img src="{{Storage::url($news->image)}}" style="width:200px;" alt="image">
                             @endif
 
                             <div class="card-body">

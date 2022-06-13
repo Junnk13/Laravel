@@ -6,7 +6,7 @@ use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class SourseSeeder extends Seeder
+class SourceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class SourseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('sourses')->insert($this->getData());
+        DB::table('sources')->insert($this->getData());
     }
     public function getData(): array
     {

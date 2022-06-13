@@ -30,13 +30,18 @@ class UserCommentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function store(Request $request)
     {
         $request->validate(['user_name'=>['required','string'] ]);
         $request->validate(['message'=>['required','string'] ]);
-        return response()->json($request->except('_token'),201);
+        $data = response()->json($request->except('_token'),201);
+        \Storage::put('file.txt', $data);
+        return redirect()->route('infonews.index')
+            ->with('success', __("message.user.comment.create.success"));
+
+        return back()->with('error', __("message.user.comment.create.error"));
     }
 
     /**

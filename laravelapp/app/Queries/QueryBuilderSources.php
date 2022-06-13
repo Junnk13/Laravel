@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Queries;
 
-use App\Models\Sourses;
+use App\Models\Sources;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class QueryBuilderSourses implements QueryBuilder
+class QueryBuilderSources implements QueryBuilder
 {
     public function getBuilder(): Builder
     {
-        return Sourses::query();
+        return Sources::query();
     }
-    public function getSourses(): LengthAwarePaginator
+    public function getSources(): LengthAwarePaginator
     {
-        return Sourses::select(['id', 'user_name', 'user_email','url','created_at'])
+        return Sources::select(['id', 'user_name', 'user_email','url','created_at'])
             ->paginate(10);
     }
 }

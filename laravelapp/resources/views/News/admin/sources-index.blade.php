@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('content')
     <h1>Список источников</h1>
+    <p>
+        <a href="{{route("admin.sources.create")}}" class="btn btn-primary my-2">Добавить источник</a>
+        <a href="{{route("admin.parser")}}" class="btn btn-primary my-2">Спарсить новости</a>
+    </p>
     <div class="table-responsive">
         @include('inc.messages')
         <table class="table table-striped table-sm">
@@ -15,22 +19,22 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($sourses as $sourseItem)
+            @foreach($sources as $sourceItem)
                 <tr>
-                    <td>{{ $sourseItem->id }}</td>
-                    <td>{{ $sourseItem->user_name }}</td>
-                    <td>{{ $sourseItem->user_email }}</td>
-                    <td>{{ $sourseItem->url }}</td>
-                    <td>{{ $sourseItem->created_at }}</td>
-                    <td><a href="{{ route('admin.sourses.edit', ['sourse' => $sourseItem->id]) }}"
+                    <td>{{ $sourceItem->id }}</td>
+                    <td>{{ $sourceItem->user_name }}</td>
+                    <td>{{ $sourceItem->user_email }}</td>
+                    <td>{{ $sourceItem->url }}</td>
+                    <td>{{ $sourceItem->created_at }}</td>
+                    <td><a href="{{ route('admin.sources.edit', ['source' => $sourceItem->id]) }}"
                            style="font-size: 12px;">Ред.</a> &nbsp;
-                        <a href="javascript:;" style="color:red; font-size: 12px;" class="delete" rel="{{ $sourseItem->id }}">Уд.</a></td>
+                        <a href="javascript:;" style="color:red; font-size: 12px;" class="delete" rel="{{ $sourceItem->id }}">Уд.</a></td>
                 </tr>
             @endforeach
             </tbody>
         </table>
 
-        {{ $sourses->links() }}
+        {{ $sources->links() }}
     </div>
 @endsection
 @push('js')
@@ -41,7 +45,7 @@
                 value.addEventListener("click", function () {
                     const id = this.getAttribute("rel");
                     if (confirm("Вы хотите удалить запись ?")) {
-                        send('/admin/sourses/' + id).then(() => {
+                        send('/admin/sources/' + id).then(() => {
                             location.reload();
                         })
                     }

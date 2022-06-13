@@ -21,5 +21,9 @@ class QueryBuilderCategories implements QueryBuilder
         return Category::select(['id', 'title', 'created_at'])
             ->paginate(10);
     }
+    public function getCategoriesForIndex()
+    {
+        return Category::select(['id', 'title'])->get();
+    }
 
 }

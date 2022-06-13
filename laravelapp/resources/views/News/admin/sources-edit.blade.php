@@ -12,20 +12,20 @@
 
         <h3>Форма редактирования источника</h3>
         @include('inc.messages')
-        <form method="post" action="{{ route('admin.sourses.update', ['sourse' => $sourse]) }}">
+        <form method="post" action="{{ route('admin.sources.update', ['source' => $source]) }}">
             @csrf
             @method('put')
             <div class="form-group">
                 <label for="title">Имя</label>
-                <input type="text" id="user_name" name="user_name" class="form-control" value="{{ $sourse->user_name }}">
+                <input type="text" id="user_name" name="user_name" class="form-control" value="{{ $source->user_name }}">
             </div>
             <div class="form-group">
                 <label for="title">email</label>
-                <input type="text" id="user_email" name="user_email" class="form-control" value="{{ $sourse->user_email }}">
+                <input type="text" id="user_email" name="user_email" class="form-control" value="{{ $source->user_email }}">
             </div>
             <div class="form-group">
                 <label for="title">Url</label>
-                <input type="text" id="url" name="url" class="form-control" value="{{ $sourse->url}}">
+                <input type="text" id="url" name="url" class="form-control" value="{{ $source->url}}">
             </div>
             <br>
             <button type="submit" class="btn btn-success">Сохранить</button>

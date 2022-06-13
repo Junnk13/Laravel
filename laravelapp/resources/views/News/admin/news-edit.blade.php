@@ -11,7 +11,7 @@
 
         <h3>Форма редактирования новости</h3>
         @include('inc.messages')
-        <form method="post" action="{{ route('admin.news.update', ['news' => $news]) }}">
+        <form method="post" action="{{ route('admin.news.update', ['news' => $news]) }}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="form-group">
@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label for="title">Полное описание</label>
-                <input type="text" id="full_description" name="full_description" class="form-control" value="{{ $news->full_description }}">
+                <textarea id="full_description" name="full_description" class="form-control" >{!!$news->full_description !!}</textarea>
             </div>
             <div class="form-group">
                 <label for="title">Статус</label>
@@ -48,8 +48,25 @@
                 <label for="title">Автор</label>
                 <input type="text" id="author" name="author" class="form-control" value="{{ $news->author }}">
             </div>
+            <div class="form-group">
+                <label for="image">Изображение</label>
+                @if($news->image)
+                    <img src="{{ Storage::url($news->image) }}" style="width: 350px;">
+                @endif
+                <input type="file" id="image" name="image" class="form-control">
+            </div>
             <br>
             <button type="submit" class="btn btn-success">Сохранить</button>
         </form>
     </div>
 @endsection
+@push('js')
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#full_description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+@endpush
